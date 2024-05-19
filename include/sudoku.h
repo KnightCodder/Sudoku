@@ -25,24 +25,14 @@ public:
 
     bool operator==(const sudoku &other) const
     {
-        board == other.board;
+        return board == other.board;
     }
     bool operator<(const sudoku &other) const
     {
-        board < other.board;
+        return board < other.board;
     }
-    sudoku(sudoku &other)
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                other.board[i][j] = board[i][j];
-            }
-        }
-
-        other.isSolved = isSolved;
-    }
+    sudoku(const sudoku &other)
+        : board(other.board), isSolved(other.isSolved) {}
 
     void print();
     status checkRow(INDEX index);
@@ -50,7 +40,7 @@ public:
     status checkMiniSudoku(INDEX index);
     bool isAvailable(INDEX index, int value);
     status update(INDEX index, int value);
-    void solve();
+    bool solve();
 };
 
 #endif

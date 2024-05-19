@@ -17,7 +17,7 @@ status sudoku::update(INDEX index, int value)
 
     if (!isAvailable(index, value))
     {
-        return status::error;
+        return status::needAnotherValue;
     }
 
     board[index.first][index.second] = value;
@@ -25,4 +25,6 @@ status sudoku::update(INDEX index, int value)
     checkRow(index);
     checkColumn(index);
     checkMiniSudoku(index);
+
+    return status::notCompleted; // no use
 }

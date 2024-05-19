@@ -11,7 +11,18 @@ enum class status
 {
     error,
     completed,
-    notCompleted
+    notCompleted,
+    needAnotherValue
+};
+
+enum class calculationCalls
+{
+    filled,
+    error,
+    finished,
+    stillSolving,
+    needAnotherValue,
+    errorInSudoku
 };
 
 namespace bits
