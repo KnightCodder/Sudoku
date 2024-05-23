@@ -21,21 +21,28 @@ bool findEmptyCell(sudoku_board &board, int &row, int &col)
     return false;
 }
 
-// Function to solve the Sudoku puzzle using backtracking
-bool sudoku::solve()
+// Function to solve the Sudoku puzzle using backtracking in a random way so that we could also check if a position has multiple solutions or not
+bool sudoku::solve(std::mt19937& gen, std::uniform_int_distribution<>& dis)
 {
     int row, col;
     if (!findEmptyCell(board, row, col))
         return true;
 
+    int allVariableDone = 0;
     sudoku rollback = *this;
-    for (int num = 1; num <= 9; num++)
+    while (allVariableDone != 511)
     {
+        int k = dis(gen);
+        int temp = allVariableDone | (1 << (k - 1));
+        if (temp == allVariableDone)
+            continue;
+        allVariableDone = temp;
+
         INDEX index = {row, col};
-        if (isAvailable(index, num))
+        if (isAvailable(index, k))
         {
-            update(index, num);
-            if (solve())
+            update(index, k);
+            if (solve(gen, dis))
                 return true;
             *this = rollback;
         }

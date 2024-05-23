@@ -18,15 +18,29 @@ int main()
     std::cout << "Original Sudoku Board:" << std::endl;
     puzzle.print();
 
-    if (puzzle.solve())
+    int64_t seed = 694; // Example seed value
+    std::mt19937 gen(seed); // Initialize the generator with the seed
+
+    std::uniform_int_distribution<> dis(1, 9); // Define a distribution
+
+
+    // if (puzzle.solve(gen,dis))
+    // {
+    //     std::cout << "Solved Sudoku Board:" << std::endl;
+    //     puzzle.print();
+    // }
+    // else
+    // {
+    //     std::cout << "No solution exists for the given Sudoku puzzle." << std::endl;
+    // }
+
+    if (puzzle.uniquePuzzle())
     {
-        std::cout << "Solved Sudoku Board:" << std::endl;
-        puzzle.print();
+        std::cout << "unique" << std::endl;
     }
     else
-    {
-        std::cout << "No solution exists for the given Sudoku puzzle." << std::endl;
-    }
+        std::cout << "not unique" << std::endl;
+        
 
     return 0;
 }

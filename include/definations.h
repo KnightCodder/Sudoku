@@ -3,6 +3,7 @@
 
 #include <array>
 #include <iostream>
+#include <random>
 
 #define sudoku_board std::array<std::array<int, 9>, 9>
 #define INDEX std::pair<int, int>
@@ -30,6 +31,7 @@ namespace bits
     const int solved = 134217727;
     const int notsolved = 0;
 
+    extern int emptyBoard[9][9];
 }
 
 #endif

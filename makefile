@@ -32,6 +32,10 @@ all: $(LIB_DIR)/$(LIB_NAME) $(OBJ_DIR)/test1.o
 	$(CXX) $(OBJS) $(OBJ_DIR)/test1.o -o $(OBJ_DIR)/test1 -L$(LIB_DIR) -lsudoku
 	./$(OBJ_DIR)/test1
 
+test:
+	$(CXX) -o test $(TEST_DIR)/test2.cpp
+	./test
+
 # Rule to compile individual source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) -c $< $(CXXFLAGS) -o $@
