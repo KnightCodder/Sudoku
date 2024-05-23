@@ -12,7 +12,11 @@ int main()
     for (int i = 0; i < 10; ++i)
     {
         int k = dis(gen);
-        std::cout << k << " ";
+
+        std::mt19937 g(k);
+        std::uniform_int_distribution<> d(1,9);
+
+        std::cout << "seed : " << k << " | value : " << d(g) << std::endl;
     }
     std::cout << std::endl;
 

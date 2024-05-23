@@ -42,10 +42,11 @@ public:
     status checkMiniSudoku(INDEX index);
     bool isAvailable(INDEX index, int value);
     status update(INDEX index, int value);
+    void remove(INDEX index);
     bool solve(std::mt19937& gen = *(new std::mt19937(0)), std::uniform_int_distribution<>& dis = *(new std::uniform_int_distribution<>(1, 9)));
     bool uniquePuzzle(int tries = 10, int seed = 0);
 };
 
-sudoku generateSudoku(int64_t seed, int freeCells);
+sudoku generateSudoku(int64_t solSeed, int64_t puzzleSeed, int freeCells);
 
 #endif

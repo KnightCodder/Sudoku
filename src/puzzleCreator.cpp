@@ -2,15 +2,34 @@
 
 #include <algorithm>
 
-sudoku generateSudoku(int64_t seed, int freeCells)
+sudoku generateSudoku(int64_t solSeed, int64_t puzzleSeed, int freeCells = 81)
 {
     sudoku puzzle;
-    std::mt19937 gen(seed); // Initialize the generator with the seed
+    std::mt19937 gen(solSeed); // Initialize the generator with the seed
     std::uniform_int_distribution<> dis(1, 9); // Define a distribution
 
     puzzle.solve(gen,dis);
 
     /*implement difficulty*/
+    std::mt19937 g(puzzleSeed);
+    std::uniform_int_distribution<> d(0,80);
+
+    sudoku rollback = puzzle;
+    for (int i = 0; i < freeCells; i++)
+    {
+        int k = d(g);
+        INDEX index = {k / 9, k % 9};
+
+        puzzle.remove(index);
+        
+        if (!puzzle.uniquePuzzle())
+        {
+            puzzle = rollback;
+            break;
+        }
+
+        rollback.remove(index);
+    }
 
     return puzzle;
 }
@@ -25,7 +44,9 @@ bool sudoku::uniquePuzzle(int tries, int seed)
     {
         sudoku temp = *this;
         int puzzleSeed = dis(gen);
-        temp.solve(std::mt19937(puzzleSeed));
+        std::mt19937 g(puzzleSeed);
+
+        temp.solve(g);
 
         if (!(temp == solution || solution == bits::emptyBoard))
         {

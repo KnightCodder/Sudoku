@@ -28,3 +28,10 @@ status sudoku::update(INDEX index, int value)
 
     return status::notCompleted; // no use
 }
+
+void sudoku::remove(INDEX index)
+{
+    board[index.first][index.second] = 0;
+
+    isSolved &= ~((1 << (index.first)) | (1 << (9 + index.second)) | (1 << (18 + (index.first - index.first % 3) + (index.second / 3))));
+}
