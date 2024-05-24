@@ -36,12 +36,25 @@ test:
 	$(CXX) -o test $(TEST_DIR)/test2.cpp
 	./test
 
+cgi: $(LIB_DIR)/$(LIB_NAME) cgi/protocol.o
+	$(CXX) cgi/protocol.o -o cgi/sudoku_generator -L$(LIB_DIR) -lsudoku -static-libstdc++ -static-libgcc
+
+game: $(LIB_DIR)/$(LIB_NAME) game/game.o
+	$(CXX) game/game.o -o game/playSudoku -L$(LIB_DIR) -lsudoku -static-libstdc++ -static-libgcc
+	./game/playSudoku
+
 # Rule to compile individual source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) -c $< $(CXXFLAGS) -o $@
 
 # Rule to compile test1.cpp into object file
 $(OBJ_DIR)/test1.o: $(TEST_DIR)/test1.cpp
+	$(CXX) -c $< $(CXXFLAGS) -o $@
+
+cgi/protocol.o: cgi/protocol.cpp
+	$(CXX) -c $< $(CXXFLAGS) -o $@
+
+game/game.o: game/game.cpp
 	$(CXX) -c $< $(CXXFLAGS) -o $@
 
 # Rule to build static library

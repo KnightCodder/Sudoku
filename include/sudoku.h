@@ -8,9 +8,10 @@
 class sudoku
 {
     sudoku_board board = {};
-    int isSolved = bits::notsolved;
-
 public:
+    int isSolved = bits::notsolved;
+    std::array<std::array<bool, 9>, 9> lockedCells;
+
     sudoku(int inputBoard[9][9] = bits::emptyBoard)
     {
         for (int i = 0; i < 9; i++)
@@ -45,6 +46,33 @@ public:
     void remove(INDEX index);
     bool solve(std::mt19937& gen = *(new std::mt19937(0)), std::uniform_int_distribution<>& dis = *(new std::uniform_int_distribution<>(1, 9)));
     bool uniquePuzzle(int tries = 10, int seed = 0);
+    std::string toString()
+    {
+        std::string str = "";
+
+        for (auto row : board)
+        {
+            for (auto cell : row)
+            {
+                str += std::to_string(cell) + " ";
+            }
+        }
+
+        return str;
+    }
+    void lockCells()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] == 0)
+                    lockedCells[i][j] = false;
+                else
+                    lockedCells[i][j] = true;   
+            }
+        }
+    }
 };
 
 sudoku generateSudoku(int64_t solSeed, int64_t puzzleSeed, int freeCells);
