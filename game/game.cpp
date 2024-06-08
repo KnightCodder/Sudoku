@@ -12,6 +12,7 @@ int main()
 
     sudoku puzzle = generateSudoku(solSeed,puzzleSeed,81);
     puzzle.lockCells();
+    int difficulty = puzzle.difficulty();
 
     sudoku solution;
     std::mt19937 gen(solSeed);
@@ -67,7 +68,9 @@ int main()
     {
         std::cout << "\n----------------------------------------\n\nFAILED TO SOLVE THE PUZZLE\n----------------------------------------\n\nsolutions :-" << std::endl;
         solution.print();
+        std::cout << "\ndifficulty : " << difficulty << std::endl;
     }
+    std::cin >> solSeed;
 
     return 0;
 }

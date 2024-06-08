@@ -73,6 +73,7 @@ public:
             }
         }
     }
+    int difficulty();
 };
 
 sudoku generateSudoku(int64_t solSeed, int64_t puzzleSeed, int freeCells);

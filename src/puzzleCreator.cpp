@@ -56,3 +56,64 @@ bool sudoku::uniquePuzzle(int tries, int seed)
     }
     return true;
 }
+
+int sudoku::difficulty()
+{
+    if (isSolved != 0)
+        return -1;
+
+    int numFilledCells = 0;
+    int toughness = 0;
+
+    // checking rows
+    for (int row = 0; row < 9; row++)
+    {
+        int filled = 0;
+        for (int col = 0; col < 9; col++)
+        {
+            if (board[row][col] != 0)
+            {
+                numFilledCells++;
+                filled++;
+            }
+        }
+
+        toughness += (8 - filled) * (8 - filled) * (8 - filled);
+    }
+
+    // checking columns
+    for (int col = 0; col < 9; col++)
+    {
+        int filled = 0;
+        for (int row = 0; row < 9; row++)
+        {
+            if (board[row][col] != 0)
+            {
+                filled++;
+            }
+        }
+
+        toughness += (8 - filled) * (8 - filled) * (8 - filled);
+    }
+
+    // checking mini sudoku
+    for (int mini_row = 0; mini_row < 3; mini_row++)
+    {
+        for (int mini_col = 0; mini_col < 3; mini_col++)
+        {
+            int filled = 0;
+            for (int row = mini_row * 3; row < 3*(mini_row + 1); row++)
+            {
+                for (int col = mini_col * 3; col < 3*(mini_col + 1); col++)
+                {
+                    if (board[row][col] != 0)
+                        filled++;
+                }
+            }
+
+            toughness += (8 - filled) * (8 - filled) * (8 - filled);
+        }
+    }
+
+    return toughness;
+}
