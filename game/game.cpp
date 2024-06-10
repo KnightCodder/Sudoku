@@ -1,21 +1,23 @@
 #include "sudoku.h"
 
-sudoku generateSudoku(int64_t solSeed, int64_t puzzleSeed, int freeCells);
+sudoku generatePuzzle(int64_t seed, int ratingStartPoint, int ratingEndPoint);
 
 int main()
 {
-    int64_t solSeed, puzzleSeed;
+    int64_t seed;
+    std::cout << "enter seed : ";
+    std::cin >> seed;
 
-    std::cout << "enter solution and puzzle seed : ";
+    int startRating, endRating;
+    std::cout << "enter puzzle rating range (starting range, end range) : ";
+    std::cin >> startRating >> endRating;
 
-    std::cin >> solSeed >> puzzleSeed;
-
-    sudoku puzzle = generateSudoku(solSeed,puzzleSeed,81);
+    sudoku puzzle = generatePuzzle(seed,startRating,endRating);
     puzzle.lockCells();
     int difficulty = puzzle.difficulty();
 
-    sudoku solution;
-    std::mt19937 gen(solSeed);
+    sudoku solution = puzzle;
+    std::mt19937 gen(69);
     solution.solve(gen);
 
     while (puzzle.isSolved != bits::solved)
@@ -70,7 +72,7 @@ int main()
         solution.print();
         std::cout << "\ndifficulty : " << difficulty << std::endl;
     }
-    std::cin >> solSeed;
+    std::cin >> seed;
 
     return 0;
 }

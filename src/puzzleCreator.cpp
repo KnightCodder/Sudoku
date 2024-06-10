@@ -117,3 +117,20 @@ int sudoku::difficulty()
 
     return toughness;
 }
+
+sudoku generatePuzzle(int64_t seed, int ratingStartPoint = 0, int ratingEndPoint = 9999)
+{
+    std::mt19937 gen(seed); // Initialize the generator with the seed
+    std::uniform_int_distribution<> dis; // Define a distribution
+
+    while (true)
+    {
+        sudoku puzzle = generateSudoku(dis(gen), dis(gen));
+
+        int difficulty = puzzle.difficulty();
+
+        if (difficulty >= ratingStartPoint && difficulty <= ratingEndPoint)
+            return puzzle;
+    }
+}
+
